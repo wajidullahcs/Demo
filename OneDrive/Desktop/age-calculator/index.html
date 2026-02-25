@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Age Calculator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 350px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 10px;
+            width: 90%;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid gray;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4facfe;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #007bff;
+        }
+
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Age Calculator</h2>
+
+        <label>Select Your Date of Birth:</label>
+        <input type="date" id="dob">
+
+        <br>
+
+        <button onclick="calculateAge()">Calculate Age</button>
+
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function calculateAge() {
+
+            let dob = document.getElementById("dob").value;
+
+            if (dob === "") {
+                document.getElementById("result").innerHTML = "Please select your Date of Birth!";
+                return;
+            }
+
+            let birthDate = new Date(dob);
+            let today = new Date();
+
+            // Check future date
+            if (birthDate > today) {
+                document.getElementById("result").innerHTML = "Future date is not allowed!";
+                return;
+            }
+
+            let years = today.getFullYear() - birthDate.getFullYear();
+            let months = today.getMonth() - birthDate.getMonth();
+            let days = today.getDate() - birthDate.getDate();
+
+            // Adjust days
+            if (days < 0) {
+                months--;
+                let previousMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+                days += previousMonth.getDate();
+            }
+
+            // Adjust months
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            document.getElementById("result").innerHTML =
+                "Your Age is: " + years + " Years, " + months + " Months, " + days + " Days.";
+        }
+    </script>
+
+</body>
+</html>
